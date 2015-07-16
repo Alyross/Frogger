@@ -12,11 +12,19 @@ Game::Game()
 	frog2->SetPosition(225, 375);
 
 	Car* red1 = new Car(Car::RED);
-	red1->SetPosition(0, 380);
+	red1->SetPosition(0, 290);
 
-	Car* 
+	Car* yellow1 = new Car(Car::YELLOW);
+	yellow1->SetPosition(0, 380);
 
-	//Car* c = new Car(Car::CAR_TYPE::BLUE);
+	Car* green1 = new Car(Car::GREEN);
+	green1->SetPosition(0, 350);
+
+	Car* blue1 = new Car(Car::BLUE);
+	blue1->SetPosition(0, 320);
+
+	Car* truck1 = new Car(Car::TRUCK);
+	truck1->SetPosition(0, 260);
 }
 
 Game::~Game()
