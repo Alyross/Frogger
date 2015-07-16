@@ -4,7 +4,7 @@
 
 int main(int argc, char* args[])
 {
-	Engine::GetInstance()->Init();
+	Engine::GetInstance()->Init(450, 435);
 
 	Game* game = new Game();
 	

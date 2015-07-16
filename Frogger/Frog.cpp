@@ -17,5 +17,7 @@ void Frog::Update()
 {
 	//currentPos += speed;
 
-	dstRect->x = currentPos;
+	//dstRect->x = currentPos;
+
+	//if (mEvent->key.keysym.sym == SDLK_ESCAPE)
 } 

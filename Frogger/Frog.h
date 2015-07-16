@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.h"
 
-#define FROG_PATH "Images/Frog.psd"
+#define FROG_PATH "Images/Frog.png"
 
 class Frog :
 	public Sprite
