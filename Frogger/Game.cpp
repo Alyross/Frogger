@@ -8,23 +8,20 @@ Game::Game()
 	Frog* frog = new Frog();
 	frog->SetPosition(225, 405);
 
-	Frog* frog2 = new Frog();
-	frog2->SetPosition(225, 375);
-
 	Car* red1 = new Car(Car::RED);
-	red1->SetPosition(0, 290);
+	red1->SetPosition(0, 285);
 
 	Car* yellow1 = new Car(Car::YELLOW);
-	yellow1->SetPosition(0, 380);
+	yellow1->SetPosition(0, 375);
 
 	Car* green1 = new Car(Car::GREEN);
-	green1->SetPosition(0, 350);
+	green1->SetPosition(0, 345);
 
 	Car* blue1 = new Car(Car::BLUE);
-	blue1->SetPosition(0, 320);
+	blue1->SetPosition(0, 315);
 
 	Car* truck1 = new Car(Car::TRUCK);
-	truck1->SetPosition(0, 260);
+	truck1->SetPosition(410, 252.5);
 }
 
 Game::~Game()

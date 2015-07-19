@@ -6,12 +6,15 @@ std::string Car::CAR_GREEN_PATH = "Images/CarGreen.png";
 std::string Car::CAR_YELLOW_PATH = "Images/CarYellow.png";
 std::string Car::CAR_TRUCK_PATH = "Images/CarTruck.png";
 
+//constructeur par défaut
 Car::Car()
 {
 }
 
+//constructeur paramétré par type de Car
 Car::Car(CAR_TYPE type)
 {
+	//Set les textures pour chaque type de Car
 	switch (type)
 	{
 	case Car::RED:
@@ -36,4 +39,9 @@ Car::Car(CAR_TYPE type)
 
 Car::~Car()
 {
+}
+
+void Move()
+{
+	
 }
