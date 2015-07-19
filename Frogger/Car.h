@@ -12,7 +12,7 @@ public:
 	Car(CAR_TYPE type);
 	~Car();
 
-	
+	void Update();
 
 private:
 	static std::string CAR_RED_PATH;

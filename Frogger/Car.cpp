@@ -8,11 +8,13 @@ std::string Car::CAR_TRUCK_PATH = "Images/CarTruck.png";
 
 //constructeur par défaut
 Car::Car()
+	: speed(1.0f)
 {
 }
 
 //constructeur paramétré par type de Car
 Car::Car(CAR_TYPE type)
+	: speed(1.0f)
 {
 	//Set les textures pour chaque type de Car
 	switch (type)
@@ -41,7 +43,12 @@ Car::~Car()
 {
 }
 
-void Move()
+void Car::Update()
 {
-	
+	Move();
+}
+
+void Car::Move()
+{
+	SetPosition(GetX() + speed, GetY());
 }
