@@ -8,11 +8,17 @@ Game::Game()
 	Frog* frog = new Frog();
 	frog->SetPosition(225, 405);
 
-	SpawnLane(Car::RED, 275, 115, 5, 1, 450);
-	SpawnLane(Car::YELLOW, 375, 115, 5, -1, 0);
-	SpawnLane(Car::GREEN, 345, 115, 5, 1, 450);
-	SpawnLane(Car::BLUE, 315, 115, 5, -1, 0);
-	SpawnLane(Car::TRUCK, 252.5, 115, 3, -1, 0);
+	//Spawn cars
+	SpawnCarLane(Car::RED, 282, 115, 5, 1, 0);
+	SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 450);
+	SpawnCarLane(Car::GREEN, 345, 115, 5, 1, 0);
+	SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 450);
+	SpawnCarLane(Car::TRUCK, 252, 115, 4, -1, 450);
+
+	//Spawn Logs and turtles
+	SpawnLogLane(Log::LARGE, 185, 150, 3, 1, 0);
+	SpawnLogLane(Log::TURTLE, 160, 25, 10, -1, 450);
+	//SpawnLogLane(Log::Medium)
 }
 
 Game::~Game()
@@ -20,12 +26,22 @@ Game::~Game()
 }
 
 
-void Game::SpawnLane(Car::CAR_TYPE type, int y, int offsetX, int nbCar, int direction, int edge)
+void Game::SpawnCarLane(Car::CAR_TYPE type, int y, int offsetX, int nbCar, int direction, int edge)
 {
 	for (int i = 0; i < nbCar; i++)
 	{
-		Car* temp = new Car(type, direction, edge);
-		cars.push_back (temp);
-		temp->SetPosition(i * offsetX, y);
+		Car* tempCar = new Car(type, direction, edge);
+		cars.push_back (tempCar);
+		tempCar->SetPosition(i * offsetX, y);
+	}
+}
+
+void Game::SpawnLogLane(Log::LOG_TYPE type, int y, int offsetX, int nbLog, int direction, int edge)
+{
+	for (int i = 0; i < nbLog; i++)
+	{
+		Log* tempLog = new Log(type, direction, edge);
+		logs.push_back(tempLog);
+		tempLog->SetPosition(i * offsetX, y);
 	}
 }

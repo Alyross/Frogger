@@ -8,11 +8,10 @@ std::string Car::CAR_TRUCK_PATH = "Images/CarTruck.png";
 
 //constructeur par défaut
 Car::Car()
-	: speed(1.0f)
 {
 }
 
-//constructeur paramétré par type de Car
+//constructeur paramétré 
 Car::Car(CAR_TYPE type, int direction, int edge)
 	: speed(1.0f)
 	, direction(direction)
@@ -50,11 +49,12 @@ void Car::Update()
 	Move();
 }
 
+//Mouvement pour les cars
 void Car::Move()
 {
 	SetPosition(GetX() + speed * direction, GetY());
-	if (GetX() >= edge)
+	if (GetX() >= maxWidth || GetX() <= minWidth)
 	{
-		SetPosition(0, GetY());
+		SetPosition(edge, GetY());
 	}
 }

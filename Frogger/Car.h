@@ -22,7 +22,8 @@ private:
 	static std::string CAR_TRUCK_PATH;
 
 	void Move();
-	int speed;
+
+	float speed;
 	int direction;
 	int edge;
 };

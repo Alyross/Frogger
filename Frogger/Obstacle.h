@@ -6,5 +6,13 @@ class Obstacle :
 public:
 	Obstacle();
 	virtual ~Obstacle();
+
+protected:
+	short maxWidth;
+	short minWidth;
+
+	//float speed;
+	//int direction;
+	//int edge;
 };
 
