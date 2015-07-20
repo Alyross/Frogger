@@ -13,8 +13,10 @@ Car::Car()
 }
 
 //constructeur paramétré par type de Car
-Car::Car(CAR_TYPE type)
+Car::Car(CAR_TYPE type, int direction, int edge)
 	: speed(1.0f)
+	, direction(direction)
+	, edge(edge)
 {
 	//Set les textures pour chaque type de Car
 	switch (type)
@@ -50,5 +52,9 @@ void Car::Update()
 
 void Car::Move()
 {
-	SetPosition(GetX() + speed, GetY());
+	SetPosition(GetX() + speed * direction, GetY());
+	if (GetX() >= edge)
+	{
+		SetPosition(0, GetY());
+	}
 }

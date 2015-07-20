@@ -8,22 +8,24 @@ Game::Game()
 	Frog* frog = new Frog();
 	frog->SetPosition(225, 405);
 
-	Car* red1 = new Car(Car::RED);
-	red1->SetPosition(0, 285);
-
-	Car* yellow1 = new Car(Car::YELLOW);
-	yellow1->SetPosition(0, 375);
-
-	Car* green1 = new Car(Car::GREEN);
-	green1->SetPosition(0, 345);
-
-	Car* blue1 = new Car(Car::BLUE);
-	blue1->SetPosition(0, 315);
-
-	Car* truck1 = new Car(Car::TRUCK);
-	truck1->SetPosition(410, 252.5);
+	SpawnLane(Car::RED, 275, 115, 5, 1, 450);
+	SpawnLane(Car::YELLOW, 375, 115, 5, -1, 0);
+	SpawnLane(Car::GREEN, 345, 115, 5, 1, 450);
+	SpawnLane(Car::BLUE, 315, 115, 5, -1, 0);
+	SpawnLane(Car::TRUCK, 252.5, 115, 3, -1, 0);
 }
 
 Game::~Game()
 {
+}
+
+
+void Game::SpawnLane(Car::CAR_TYPE type, int y, int offsetX, int nbCar, int direction, int edge)
+{
+	for (int i = 0; i < nbCar; i++)
+	{
+		Car* temp = new Car(type, direction, edge);
+		cars.push_back (temp);
+		temp->SetPosition(i * offsetX, y);
+	}
 }

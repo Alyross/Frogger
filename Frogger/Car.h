@@ -9,7 +9,7 @@ public:
 	enum CAR_TYPE { RED, BLUE, GREEN, YELLOW, TRUCK };
 
 	Car();
-	Car(CAR_TYPE type);
+	Car(CAR_TYPE type, int direction, int edge);
 	~Car();
 
 	void Update();
@@ -23,5 +23,7 @@ private:
 
 	void Move();
 	int speed;
+	int direction;
+	int edge;
 };
 
