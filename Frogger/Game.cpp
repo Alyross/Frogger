@@ -16,9 +16,11 @@ Game::Game()
 	SpawnCarLane(Car::TRUCK, 252, 115, 4, -1, 450);
 
 	//Spawn Logs and turtles
-	SpawnLogLane(Log::LARGE, 185, 150, 3, 1, 0);
-	SpawnLogLane(Log::TURTLE, 160, 25, 10, -1, 450);
-	//SpawnLogLane(Log::Medium)
+	SpawnLogLane(Log::LARGE, 180, 150, 3, 1, 0);
+	SpawnLogLane(Log::TURTLE, 150, 25, 10, -1, 450);
+	SpawnLogLane(Log::MEDIUM, 120, 115, 4, 1, 0);
+	SpawnLogLane(Log::TURTLE, 90, 50, 5, -1, 450);
+	SpawnLogLane(Log::SMALL, 60, 180, 6, 1, 0);
 }
 
 Game::~Game()
