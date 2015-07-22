@@ -9,18 +9,18 @@ Game::Game()
 	frog->SetPosition(225, 405);
 
 	//Spawn cars
-	SpawnCarLane(Car::RED, 282, 115, 5, 1, 0);
-	SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 450);
-	SpawnCarLane(Car::GREEN, 345, 115, 5, 1, 0);
-	SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 450);
-	SpawnCarLane(Car::TRUCK, 252, 115, 4, -1, 450);
+	SpawnCarLane(Car::RED, 282, 115, 4, 1, -25);
+	SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 475);
+	SpawnCarLane(Car::GREEN, 345, 115, 4, 1, -25);
+	SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 475);
+	SpawnCarLane(Car::TRUCK, 252, 115, 4, -1, 485);
 
-	//Spawn Logs and turtles
-	SpawnLogLane(Log::LARGE, 180, 150, 3, 1, 0);
-	SpawnLogLane(Log::TURTLE, 150, 25, 10, -1, 450);
-	SpawnLogLane(Log::MEDIUM, 120, 115, 4, 1, 0);
-	SpawnLogLane(Log::TURTLE, 90, 50, 5, -1, 450);
-	SpawnLogLane(Log::SMALL, 60, 180, 6, 1, 0);
+	//Spawn Logs and turtlesk
+	SpawnLogLane(Log::LARGE, 180, 195, 3, 1, -100);
+	SpawnTurtleLane(Log::TURTLE, 150, 27, 140, 4, 3, -1, 475);
+	SpawnLogLane(Log::MEDIUM, 120, 150, 3, 1, -65);
+	SpawnTurtleLane(Log::TURTLE, 90, 27, 145, 4, 2, -1, 475);
+	SpawnLogLane(Log::SMALL, 60, 111, 5, 1, -50);
 }
 
 Game::~Game()
@@ -47,3 +47,18 @@ void Game::SpawnLogLane(Log::LOG_TYPE type, int y, int offsetX, int nbLog, int d
 		tempLog->SetPosition(i * offsetX, y);
 	}
 }
+
+void Game::SpawnTurtleLane(Log::LOG_TYPE type, int y, int minOffsetX, int offsetX, int nbStack, int nbTurtle, int direction, int edge)
+{
+	for (int i = 0; i < nbStack; i++)
+	{
+		for (int j = 0; j < nbTurtle; j++)
+
+		{
+			Log* tempTurtle = new Log(type, direction, edge);
+			logs.push_back(tempTurtle);
+			tempTurtle->SetPosition(j * minOffsetX + i * offsetX, y);
+		}
+	}
+}
+

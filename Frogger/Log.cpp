@@ -3,19 +3,19 @@
 std::string Log::LOG_SMALL_PATH = "Images/SmallLog.png";
 std::string Log::LOG_MEDIUM_PATH = "Images/MediumLog.png";
 std::string Log::LOG_LARGE_PATH = "Images/LargeLog.png";
-std::string Log::LOG_TURTLE_PATH = "Images/Turtle.png";
+std::string Log::TURTLE_PATH = "Images/Turtle.png";
 
 Log::Log()
 {
 }
 
-Log::Log(LOG_TYPE type, int direction, int edge)
+Log::Log(LOG_TYPE logType, int direction, int edge)
 	: speed(1.0f)
 	, direction(direction)
 	, edge(edge)
 {
 	//Set les textures pour les logs et tortues
-	switch (type)
+	switch (logType)
 	{
 	case Log::SMALL:
 		SetTexture(&LOG_SMALL_PATH);
@@ -27,7 +27,7 @@ Log::Log(LOG_TYPE type, int direction, int edge)
 		SetTexture(&LOG_LARGE_PATH);
 		break;
 	case Log::TURTLE:
-		SetTexture(&LOG_TURTLE_PATH);
+		SetTexture(&TURTLE_PATH);
 		break;
 
 	default:

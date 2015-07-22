@@ -18,7 +18,7 @@ private:
 	static std::string LOG_SMALL_PATH;
 	static std::string LOG_MEDIUM_PATH;
 	static std::string LOG_LARGE_PATH;
-	static std::string LOG_TURTLE_PATH;
+	static std::string TURTLE_PATH;
 
 	void Move();
 
