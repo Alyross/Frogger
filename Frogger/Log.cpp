@@ -9,10 +9,12 @@ Log::Log()
 {
 }
 
-Log::Log(LOG_TYPE logType, int direction, int edge)
+Log::Log(LOG_TYPE logType, int direction, int edge, int width, int height)
 	: speed(1.0f)
 	, direction(direction)
 	, edge(edge)
+	, width(width)
+	, height(height)
 {
 	//Set les textures pour les logs et tortues
 	switch (logType)
@@ -33,6 +35,8 @@ Log::Log(LOG_TYPE logType, int direction, int edge)
 	default:
 		break;
 	}
+
+	rect = Rectangle(0, 0, width, height);
 }
 
 Log::~Log()
@@ -52,4 +56,6 @@ void Log::Move()
 	{
 		SetPosition(edge, GetY());
 	}
+
+	rect.SetPosition(GetX(), GetY());
 }

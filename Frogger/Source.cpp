@@ -2,7 +2,6 @@
 #include "Engine.h"
 #include "Game.h"
 
-
 int main(int argc, char* args[])
 {
 	//Initialise la fenêtre de jeu avec les bonnes dimensions
@@ -18,6 +17,3 @@ int main(int argc, char* args[])
 
 	return 0;
 }
-
-
-

@@ -11,8 +11,12 @@ public:
 	~Frog();
 
 	void Update();
+	Rectangle GetRect(){ return rect; }
 
+private:
 	float currentPos;
+	Rectangle rect;
+
 	static const float speed;
 };
 

@@ -10,9 +10,5 @@ public:
 protected:
 	short maxWidth;
 	short minWidth;
-
-	//float speed;
-	//int direction;
-	//int edge;
 };
 

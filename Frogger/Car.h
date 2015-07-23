@@ -9,10 +9,12 @@ public:
 	enum CAR_TYPE { RED, BLUE, GREEN, YELLOW, TRUCK };
 
 	Car();
-	Car(CAR_TYPE type, int direction, int edge);
+	Car(CAR_TYPE type, int direction, int edge, int width, int height);
 	~Car();
 
 	void Update();
+
+	Rectangle GetRect(){ return rect; }
 
 private:
 	static std::string CAR_RED_PATH;
@@ -26,5 +28,10 @@ private:
 	float speed;
 	int direction;
 	int edge;
+
+	int width;
+	int height;
+
+	Rectangle rect;
 };
 

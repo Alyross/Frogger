@@ -12,10 +12,12 @@ Car::Car()
 }
 
 //constructeur paramétré 
-Car::Car(CAR_TYPE type, int direction, int edge)
+Car::Car(CAR_TYPE type, int direction, int edge, int width, int height)
 	: speed(1.0f)
 	, direction(direction)
 	, edge(edge)
+	, width(width)
+	, height(height)
 {
 	//Set les textures pour chaque type de Car
 	switch (type)
@@ -38,6 +40,8 @@ Car::Car(CAR_TYPE type, int direction, int edge)
 	default:
 		break;
 	}
+
+	rect = Rectangle(0, 0, width, height);
 }
 
 Car::~Car()
@@ -57,4 +61,6 @@ void Car::Move()
 	{
 		SetPosition(edge, GetY());
 	}
+
+	rect.SetPosition(GetX(), GetY());
 }

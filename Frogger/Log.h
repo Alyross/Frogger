@@ -9,10 +9,12 @@ public:
 	enum LOG_TYPE { SMALL, MEDIUM, LARGE, TURTLE };
 
 	Log();
-	Log(LOG_TYPE type, int direction, int edge);
+	Log(LOG_TYPE type, int direction, int edge, int width, int height);
 	~Log();
 
 	void Update();
+
+	Rectangle GetRect(){ return  rect; }
 
 private: 
 	static std::string LOG_SMALL_PATH;
@@ -25,5 +27,10 @@ private:
 	float speed;
 	int direction;
 	int edge;
+
+	int width;
+	int height;
+
+	Rectangle rect;
 };
 
