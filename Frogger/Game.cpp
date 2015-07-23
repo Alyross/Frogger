@@ -8,11 +8,11 @@ Game::Game()
 	background->SetPosition(0, 0);
 
 	//Spawn cars
-	//SpawnCarLane(Car::RED, 282, 115, 4, 1, -25, 24, 20);
-	//SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 475, 22, 20);
-	//SpawnCarLane(Car::GREEN, 345, 115, 4, 1, -25, 23, 20);
-	//SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 475, 25, 20);
-	//SpawnCarLane(Car::TRUCK, 252, 115, 5, -1, 485, 35, 20);
+	SpawnCarLane(Car::RED, 282, 115, 4, 1, -25, 24, 20);
+	SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 475, 22, 20);
+	SpawnCarLane(Car::GREEN, 345, 115, 4, 1, -25, 23, 20);
+	SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 475, 25, 20);
+	SpawnCarLane(Car::TRUCK, 252, 115, 5, -1, 485, 35, 20);
 
 	//Spawn Logs and turtlesk
 	SpawnLogLane	(Log::LARGE, 180, 195, 3, 1, -100, 100, 20);
