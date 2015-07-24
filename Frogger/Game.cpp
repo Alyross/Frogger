@@ -3,6 +3,8 @@
 //constructeur par défaut
 Game::Game()
 	: currentFrog(0)
+	, frogsCreated(5)
+	, nbFrogs(4)
 {
 	//Spawn the background of the game
 	Sprite* background = new Sprite("Images/Background.bmp");
@@ -28,7 +30,7 @@ Game::Game()
 	SpawnLogLane	(Log::SMALL, 60, 111, 5, 1, -50, 50, 20);
 
 	//Spawn the frog player 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < frogNb; i++)
 	{
 		Frog* frog = new Frog();
 		frog->SetPosition(218, 408);
@@ -49,67 +51,66 @@ void Game::Update()
 	if (cInput->IsKeyPressed(SDL_SCANCODE_SPACE))
 	{
 		startScreen->SetVisible(false);
+	}
 	
-		bool frogSafe = true;
+	bool frogSafe = true;
 
-		//if frog gets out of window limits
-		if (frogs[currentFrog]->GetX() <= 0 || frogs[currentFrog]->GetX() >= 450)
+	//if frog gets out of window limits
+	if (frogs[currentFrog]->GetX() <= 0 || frogs[currentFrog]->GetX() >= 450)
+	{
+		frogs[currentFrog]->SetPosition(218, 408);
+	}
+
+	if (frogs[currentFrog]->GetY() >= 435)
+	{
+		frogs[currentFrog]->SetPosition(frogs[currentFrog]->GetX(), 408);
+	}
+
+	// Collision avec les voitures
+	for (int i = 0; i < cars.size(); i++)
+	{
+		if (frogs[currentFrog]->GetRect().CollidesWith(&cars[i]->GetRect()))
 		{
-			frogs[currentFrog]->SetPosition(218, 408);
+			frogs[currentFrog]->SetVisible(false);
+			frogs[currentFrog]->SetActive(false);
+
+			currentFrog++;
+
+			frogs[currentFrog]->SetVisible(true);
+			frogs[currentFrog]->SetActive(true);
 		}
+	}
 
-		if (frogs[currentFrog]->GetY() >= 435)
-		{
-			frogs[currentFrog]->SetPosition(frogs[currentFrog]->GetX(), 408);
-		}
+	//If frog collides with a log or a turtle OnWater function turns false and the frog is safe
+	if (frogs[currentFrog]->GetY() < 216 && frogs[currentFrog]->GetY() > 40)
+	{
+		float speed = CheckIsSafe();
 
-		// Collision avec les voitures
-		for (int i = 0; i < cars.size(); i++)
+		if (speed == 0.f)
 		{
-			if (frogs[currentFrog]->GetRect().CollidesWith(&cars[i]->GetRect()))
+			// Die
+			std::cout << "Die" << std::endl;
+
+			frogs[currentFrog]->SetVisible(false);
+			frogs[currentFrog]->SetActive(false);
+			frogs[currentFrog]->SetMatchingSpeed(0.f);
+
+			if (currentFrog < nbFrogs)
 			{
-				frogs[currentFrog]->SetVisible(false);
-				frogs[currentFrog]->SetActive(false);
-
 				currentFrog++;
 
 				frogs[currentFrog]->SetVisible(true);
 				frogs[currentFrog]->SetActive(true);
 			}
 		}
-
-		//If frog collides with a log or a turtle OnWater function turns false and the frog is safe
-		if (frogs[currentFrog]->GetY() < 216 && frogs[currentFrog]->GetY() > 40)
-		{
-			float speed = CheckIsSafe();
-
-			if (speed == 0.f)
-			{
-				// Die
-				std::cout << "Die" << std::endl;
-
-				frogs[currentFrog]->SetVisible(false);
-				frogs[currentFrog]->SetActive(false);
-				frogs[currentFrog]->SetMatchingSpeed(0.f);
-
-				if (currentFrog < 4)
-				{
-					currentFrog++;
-
-					frogs[currentFrog]->SetVisible(true);
-					frogs[currentFrog]->SetActive(true);
-				}
-			}
-			else
-			{
-				frogs[currentFrog]->SetMatchingSpeed(speed);
-			}
-		}
 		else
 		{
-			frogs[currentFrog]->SetMatchingSpeed(0.f);
+			frogs[currentFrog]->SetMatchingSpeed(speed);
 		}
-		//if the frog is on the water side of the map, OnWater function is set to true
+	}
+	else
+	{
+		frogs[currentFrog]->SetMatchingSpeed(0.f);
 	}
 }
 

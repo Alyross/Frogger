@@ -31,7 +31,11 @@ private:
 	std::vector<Frog*> frogs;
 
 	int currentFrog;
+	int frogsCreated;
+	int nbFrogs;
 
 	Sprite* startScreen;
+
+	void checkLogsColl();
 };
 
