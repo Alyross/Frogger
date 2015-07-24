@@ -21,13 +21,17 @@ private:
 	
 	bool OnWater();
 	bool OnGround();
+	float CheckIsSafe();
 
 	//Frog movements input functions
 	void KeyMovements();
 
 	std::vector<Car*> cars;
 	std::vector<Log*> logs;
+	std::vector<Frog*> frogs;
 
-	Frog* frog;
+	int currentFrog;
+
+	Sprite* startScreen;
 };
 

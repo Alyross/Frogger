@@ -2,17 +2,23 @@
 
 //constructeur par défaut
 Game::Game()
+	: currentFrog(0)
 {
 	//Spawn the background of the game
 	Sprite* background = new Sprite("Images/Background.bmp");
 	background->SetPosition(0, 0);
 
+	startScreen = new Sprite("Images/StartScreen.png");
+	startScreen->SetPosition(125, 205);
+
+	
+
 	//Spawn cars
-	SpawnCarLane(Car::RED, 282, 115, 4, 1, -25, 24, 20);
-	SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 475, 22, 20);
-	SpawnCarLane(Car::GREEN, 345, 115, 4, 1, -25, 23, 20);
-	SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 475, 25, 20);
-	SpawnCarLane(Car::TRUCK, 252, 115, 5, -1, 485, 35, 20);
+	//SpawnCarLane(Car::RED, 282, 115, 4, 1, -25, 24, 20);
+	//SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 475, 22, 20);
+	//SpawnCarLane(Car::GREEN, 345, 115, 4, 1, -25, 23, 20);
+	//SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 475, 25, 20);
+	//SpawnCarLane(Car::TRUCK, 252, 115, 5, -1, 485, 35, 20);
 
 	//Spawn Logs and turtlesk
 	SpawnLogLane	(Log::LARGE, 180, 195, 3, 1, -100, 100, 20);
@@ -22,8 +28,15 @@ Game::Game()
 	SpawnLogLane	(Log::SMALL, 60, 111, 5, 1, -50, 50, 20);
 
 	//Spawn the frog player 
-	frog = new Frog();
-	frog->SetPosition(218, 408);
+	for (int i = 0; i < 5; i++)
+	{
+		Frog* frog = new Frog();
+		frog->SetPosition(218, 408);
+		frogs.push_back(frog);
+	}
+
+	frogs[currentFrog]->SetVisible(true);
+	frogs[currentFrog]->SetActive(true);
 }
 
 Game::~Game()
@@ -33,35 +46,96 @@ Game::~Game()
 
 void Game::Update()
 {
-	// Collision avec les voitures
-	for (int i = 0; i < cars.size(); i++)
+	if (cInput->IsKeyPressed(SDL_SCANCODE_SPACE))
 	{
-		if (frog->GetRect().CollidesWith(&cars[i]->GetRect()))
-		{
-			frog->SetPosition(218, 408);
-		}
-	}
+		startScreen->SetVisible(false);
+	
+		bool frogSafe = true;
 
-	//If frog collides with a log or a turtle OnWater function turns false and the frog is safe
-	for (int j = 0; j < logs.size(); j++)
-	{
-		if (frog->GetRect().CollidesWith(&logs[j]->GetRect()))
+		//if frog gets out of window limits
+		if (frogs[currentFrog]->GetX() <= 0 || frogs[currentFrog]->GetX() >= 450)
 		{
-			OnWater() == false;
+			frogs[currentFrog]->SetPosition(218, 408);
 		}
-	}
 
-	//if the frog is on the water side of the map, OnWater function is set to true
-	if (frog->GetY() <= 200)
-	{
-		OnWater() == true;
-		frog->SetPosition(218, 408);
+		if (frogs[currentFrog]->GetY() >= 435)
+		{
+			frogs[currentFrog]->SetPosition(frogs[currentFrog]->GetX(), 408);
+		}
+
+		// Collision avec les voitures
+		for (int i = 0; i < cars.size(); i++)
+		{
+			if (frogs[currentFrog]->GetRect().CollidesWith(&cars[i]->GetRect()))
+			{
+				frogs[currentFrog]->SetVisible(false);
+				frogs[currentFrog]->SetActive(false);
+
+				currentFrog++;
+
+				frogs[currentFrog]->SetVisible(true);
+				frogs[currentFrog]->SetActive(true);
+			}
+		}
+
+		//If frog collides with a log or a turtle OnWater function turns false and the frog is safe
+		if (frogs[currentFrog]->GetY() < 216 && frogs[currentFrog]->GetY() > 40)
+		{
+			float speed = CheckIsSafe();
+
+			if (speed == 0.f)
+			{
+				// Die
+				std::cout << "Die" << std::endl;
+
+				frogs[currentFrog]->SetVisible(false);
+				frogs[currentFrog]->SetActive(false);
+				frogs[currentFrog]->SetMatchingSpeed(0.f);
+
+				if (currentFrog < 4)
+				{
+					currentFrog++;
+
+					frogs[currentFrog]->SetVisible(true);
+					frogs[currentFrog]->SetActive(true);
+				}
+			}
+			else
+			{
+				frogs[currentFrog]->SetMatchingSpeed(speed);
+			}
+		}
+		else
+		{
+			frogs[currentFrog]->SetMatchingSpeed(0.f);
+		}
+		//if the frog is on the water side of the map, OnWater function is set to true
 	}
 }
 
 bool Game::OnWater()
 {
 	return false;
+}
+
+float Game::CheckIsSafe()
+{
+	for (int j = 0; j < logs.size(); j++)
+	{
+		Rectangle frogRect = frogs[currentFrog]->GetRect();
+		Rectangle logRect = logs[j]->GetRect();
+
+		if (frogRect.CollidesWith(&logRect))
+		{
+			return logs[j]->GetSpeed();
+		}
+	}
+	return 0.0f;
+}
+
+void checkLogsColl()
+{
+
 }
 
 void Game::SpawnCarLane(Car::CAR_TYPE type, int y, int offsetX, int nbCar, int direction, int edge, int width, int height)

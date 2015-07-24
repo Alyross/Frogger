@@ -12,9 +12,13 @@ public:
 
 	void Update();
 	Rectangle GetRect(){ return rect; }
+	void SetActive(bool isActive){ this->isActive = isActive; }
+	void SetMatchingSpeed(float speed) { matchingSpeed = speed; }
 
 private:
-	float currentPos;
+	bool isActive;
+	float matchingSpeed;
+
 	Rectangle rect;
 
 	static const float speed;
