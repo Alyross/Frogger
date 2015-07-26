@@ -7,7 +7,7 @@ Frog::Frog()
 	, isActive(false)
 	, matchingSpeed(0.f)
 {
-	rect = Rectangle(0, 0, 22, 20);
+	rect = Rectangle(GetX(), GetY(), 22, 20);
 }
 
 Frog::~Frog()

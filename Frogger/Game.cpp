@@ -9,18 +9,13 @@ Game::Game()
 	//Spawn the background of the game
 	Sprite* background = new Sprite("Images/Background.bmp");
 	background->SetPosition(0, 0);
-
-	startScreen = new Sprite("Images/StartScreen.png");
-	startScreen->SetPosition(125, 205);
-
 	
-
 	//Spawn cars
-	//SpawnCarLane(Car::RED, 282, 115, 4, 1, -25, 24, 20);
-	//SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 475, 22, 20);
-	//SpawnCarLane(Car::GREEN, 345, 115, 4, 1, -25, 23, 20);
-	//SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 475, 25, 20);
-	//SpawnCarLane(Car::TRUCK, 252, 115, 5, -1, 485, 35, 20);
+	SpawnCarLane(Car::RED, 282, 115, 4, 1, -25, 24, 20);
+	SpawnCarLane(Car::YELLOW, 375, 115, 5, -1, 475, 22, 20);
+	SpawnCarLane(Car::GREEN, 345, 115, 4, 1, -25, 23, 20);
+	SpawnCarLane(Car::BLUE, 315, 115, 5, -1, 475, 25, 20);
+	SpawnCarLane(Car::TRUCK, 252, 115, 5, -1, 485, 35, 20);
 
 	//Spawn Logs and turtlesk
 	SpawnLogLane	(Log::LARGE, 180, 195, 3, 1, -100, 100, 20);
@@ -30,15 +25,29 @@ Game::Game()
 	SpawnLogLane	(Log::SMALL, 60, 111, 5, 1, -50, 50, 20);
 
 	//Spawn the frog player 
-	for (int i = 0; i < frogNb; i++)
+	for (int i = 0; i < frogsCreated; i++)
 	{
 		Frog* frog = new Frog();
-		frog->SetPosition(218, 408);
+		frog->SetPosition(218, 410);
 		frogs.push_back(frog);
+
+		int startX = 23;
+		int offsetX = 98;
+
+		Victory* victoryFrog = new Victory(20, 20);
+		victoryFrog->SetVisible(false);
+		victoryFrog->SetPosition(startX + i * offsetX, 20);
+		victoryFrogs.push_back(victoryFrog);
 	}
 
 	frogs[currentFrog]->SetVisible(true);
 	frogs[currentFrog]->SetActive(true);
+
+	//Starting Screen
+	blackScreen = new Sprite("Images/blackScreen.png");
+
+	startScreen = new Sprite("Images/StartScreen.png");
+	startScreen->SetPosition(125, 205);
 }
 
 Game::~Game()
@@ -51,14 +60,20 @@ void Game::Update()
 	if (cInput->IsKeyPressed(SDL_SCANCODE_SPACE))
 	{
 		startScreen->SetVisible(false);
+		blackScreen->SetVisible(false);
 	}
 	
 	bool frogSafe = true;
 
 	//if frog gets out of window limits
-	if (frogs[currentFrog]->GetX() <= 0 || frogs[currentFrog]->GetX() >= 450)
+	if (frogs[currentFrog]->GetX() < 0)
 	{
-		frogs[currentFrog]->SetPosition(218, 408);
+		frogs[currentFrog]->SetPosition(0, frogs[currentFrog]->GetY());
+	}
+	
+	if (frogs[currentFrog]->GetX() > 420)
+	{
+		frogs[currentFrog]->SetPosition(418, frogs[currentFrog]->GetY());
 	}
 
 	if (frogs[currentFrog]->GetY() >= 435)
@@ -71,13 +86,17 @@ void Game::Update()
 	{
 		if (frogs[currentFrog]->GetRect().CollidesWith(&cars[i]->GetRect()))
 		{
+			std::cout << "fuck you!" << std::endl;
 			frogs[currentFrog]->SetVisible(false);
 			frogs[currentFrog]->SetActive(false);
 
-			currentFrog++;
+			if (currentFrog < nbFrogs)
+			{
+				currentFrog++;
 
-			frogs[currentFrog]->SetVisible(true);
-			frogs[currentFrog]->SetActive(true);
+				frogs[currentFrog]->SetVisible(true);
+				frogs[currentFrog]->SetActive(true);
+			}
 		}
 	}
 
@@ -112,6 +131,37 @@ void Game::Update()
 	{
 		frogs[currentFrog]->SetMatchingSpeed(0.f);
 	}
+
+	// VictoryConditions
+	if (frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 10 && frogs[currentFrog]->GetX() < 45)
+		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 112 && frogs[currentFrog]->GetX() < 148)
+		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 210 && frogs[currentFrog]->GetX() < 245)
+		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 308 && frogs[currentFrog]->GetX() < 343)
+		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 405 && frogs[currentFrog]->GetX() < 440))
+	{
+		frogs[currentFrog]->SetVisible(false);
+		frogs[currentFrog]->SetActive(false);
+		frogs[currentFrog]->SetMatchingSpeed(0.f);
+		
+		if (currentFrog < nbFrogs)
+		{
+			currentFrog++;
+
+			frogs[currentFrog]->SetVisible(true);
+			frogs[currentFrog]->SetActive(true);
+		}
+		for (int i = 0; i < victoryFrogs.size(); i++)
+		{
+			if (frogs[currentFrog]->GetRect().CollidesWith(&victoryFrogs[i]->GetRect()))
+			{
+				victoryFrogs[i]->SetVisible(true);
+			}
+		}
+	}
+
+	
+
+	
 }
 
 bool Game::OnWater()
@@ -173,4 +223,9 @@ void Game::SpawnTurtleLane(Log::LOG_TYPE type, int y, int minOffsetX, int offset
 			tempTurtle->SetPosition(i * offsetX + j * minOffsetX, y);
 		}
 	}
+}
+
+void VictoryConditions()
+{
+	
 }

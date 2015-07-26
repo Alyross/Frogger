@@ -6,7 +6,7 @@ class Log :
 	public Obstacle
 {
 public:
-	enum LOG_TYPE { SMALL, MEDIUM, LARGE, TURTLE, VICTORY };
+	enum LOG_TYPE { SMALL, MEDIUM, LARGE, TURTLE };
 
 	Log();
 	Log(LOG_TYPE type, int direction, int edge, int width, int height);
@@ -22,7 +22,6 @@ private:
 	static std::string LOG_MEDIUM_PATH;
 	static std::string LOG_LARGE_PATH;
 	static std::string TURTLE_PATH;
-	static std::string VICTORY_PATH;
 
 	void Move();
 

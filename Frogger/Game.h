@@ -3,6 +3,7 @@
 #include "Car.h"
 #include "Frog.h"
 #include "Log.h"
+#include "Victory.h"
 
 class Game :
 	public Component
@@ -25,16 +26,19 @@ private:
 
 	//Frog movements input functions
 	void KeyMovements();
+	void VictoryConditions();
 
 	std::vector<Car*> cars;
 	std::vector<Log*> logs;
 	std::vector<Frog*> frogs;
+	std::vector<Victory*> victoryFrogs;
 
 	int currentFrog;
 	int frogsCreated;
 	int nbFrogs;
 
 	Sprite* startScreen;
+	Sprite* blackScreen;
 
 	void checkLogsColl();
 };

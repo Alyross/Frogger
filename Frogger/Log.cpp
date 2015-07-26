@@ -5,7 +5,7 @@ std::string Log::LOG_SMALL_PATH = "Images/SmallLog.png";
 std::string Log::LOG_MEDIUM_PATH = "Images/MediumLog.png";
 std::string Log::LOG_LARGE_PATH = "Images/LargeLog.png";
 std::string Log::TURTLE_PATH = "Images/Turtle.png";
-std::string Log::VICTORY_PATH = "Images/Victory.png";
+
 //constructeur par défaut
 Log::Log()
 {
@@ -33,9 +33,6 @@ Log::Log(LOG_TYPE logType, int direction, int edge, int width, int height)
 		break;
 	case Log::TURTLE:
 		SetTexture(&TURTLE_PATH);
-		break;
-	case Log::VICTORY:
-		SetTexture(&VICTORY_PATH);
 		break;
 
 	default:

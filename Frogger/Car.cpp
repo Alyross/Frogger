@@ -41,7 +41,7 @@ Car::Car(CAR_TYPE type, int direction, int edge, int width, int height)
 		break;
 	}
 
-	rect = Rectangle(0, 0, width, height);
+	rect = Rectangle(GetX(), GetY(), width, height);
 }
 
 Car::~Car()
