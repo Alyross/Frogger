@@ -11,7 +11,6 @@ public:
 	~Frog();
 
 	void Update();
-	bool GetActive(){ return isActive; }
 	Rectangle GetRect(){ return rect; }
 	void SetActive(bool isActive){ this->isActive = isActive; }
 	void SetMatchingSpeed(float speed) { matchingSpeed = speed; }

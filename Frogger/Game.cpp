@@ -25,7 +25,7 @@ Game::Game()
 	SpawnTurtleLane	(Log::TURTLE, 90, 27, 145, 4, 2, -1, 475, 25, 20);
 	SpawnLogLane	(Log::SMALL, 60, 111, 5, 1, -50, 50, 20);
 
-	//Spawn the frog player 
+	//Spawn the frog player and the nenuphar/victoryfrogs and sets them invisible until a collision with the player occurs
 	for (int i = 0; i < frogsCreated; i++)
 	{
 		Frog* frog = new Frog();
@@ -46,7 +46,6 @@ Game::Game()
 
 	//Starting Screen
 	blackScreen = new Sprite("Images/blackScreen.png");
-
 	startScreen = new Sprite("Images/StartScreen.png");
 	startScreen->SetPosition(125, 205);
 }
@@ -100,7 +99,7 @@ void Game::Update()
 		}
 	}
 
-	//If frog collides with a log or a turtle OnWater function turns false and the frog is safe
+	//if the frog touches the water it dies, if it is on a log or a turtle it will move in their direction at the same speed
 	if (frogs[currentFrog]->GetY() < 216 && frogs[currentFrog]->GetY() > 40)
 	{
 		float speed = CheckIsSafe();
@@ -108,8 +107,6 @@ void Game::Update()
 		if (speed == 0.f)
 		{
 			// Die
-			std::cout << "Your frog Died" << std::endl;
-
 			frogs[currentFrog]->SetVisible(false);
 			frogs[currentFrog]->SetActive(false);
 			frogs[currentFrog]->SetMatchingSpeed(0.f);
@@ -131,14 +128,8 @@ void Game::Update()
 	{
 		frogs[currentFrog]->SetMatchingSpeed(0.f);
 	}
-
-	// VictoryConditions
-	//if (frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 10 && frogs[currentFrog]->GetX() < 45)
-	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 112 && frogs[currentFrog]->GetX() < 148)
-	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 210 && frogs[currentFrog]->GetX() < 245)
-	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 308 && frogs[currentFrog]->GetX() < 343)
-	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 405 && frogs[currentFrog]->GetX() < 440))
-
+	
+	//Victory Conditions
 	if (frogs[currentFrog]->GetY() < 40)
 	{
 		frogs[currentFrog]->SetVisible(false);
@@ -166,11 +157,7 @@ void Game::Update()
 	}
 }
 
-bool Game::OnWater()
-{
-	return false;
-}
-
+//check if frog is safe when in water zone
 float Game::CheckIsSafe()
 {
 	for (int j = 0; j < logs.size(); j++)
@@ -184,11 +171,6 @@ float Game::CheckIsSafe()
 		}
 	}
 	return 0.0f;
-}
-
-void checkLogsColl()
-{
-
 }
 
 void Game::SpawnCarLane(Car::CAR_TYPE type, int y, int offsetX, int nbCar, int direction, int edge, int width, int height)
@@ -225,9 +207,4 @@ void Game::SpawnTurtleLane(Log::LOG_TYPE type, int y, int minOffsetX, int offset
 			tempTurtle->SetPosition(i * offsetX + j * minOffsetX, y);
 		}
 	}
-}
-
-void VictoryConditions()
-{
-	
 }

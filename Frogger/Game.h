@@ -20,12 +20,9 @@ private:
 	void SpawnLogLane(Log::LOG_TYPE logType, int y, int offsetX, int nbLog, int direction, int edge, int width, int height);
 	void SpawnTurtleLane(Log::LOG_TYPE logType, int y, int minOffsetX, int offsetX, int nbStack, int nbTurtle, int direction, int edge, int width, int height);
 	
-	bool OnWater();
-	bool OnGround();
 	float CheckIsSafe();
 
 	//Frog movements input functions
-	void KeyMovements();
 	void VictoryConditions();
 
 	std::vector<Car*> cars;
@@ -40,7 +37,5 @@ private:
 
 	Sprite* startScreen;
 	Sprite* blackScreen;
-
-	void checkLogsColl();
 };
 
