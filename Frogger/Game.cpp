@@ -5,6 +5,7 @@ Game::Game()
 	: currentFrog(0)
 	, frogsCreated(5)
 	, nbFrogs(4)
+	, currentVictoryFrog(0)
 {
 	//Spawn the background of the game
 	Sprite* background = new Sprite("Images/Background.bmp");
@@ -57,13 +58,12 @@ Game::~Game()
 
 void Game::Update()
 {
+	//press spacebar to remove the startscreen and start playing
 	if (cInput->IsKeyPressed(SDL_SCANCODE_SPACE))
 	{
 		startScreen->SetVisible(false);
 		blackScreen->SetVisible(false);
 	}
-	
-	bool frogSafe = true;
 
 	//if frog gets out of window limits
 	if (frogs[currentFrog]->GetX() < 0)
@@ -86,7 +86,7 @@ void Game::Update()
 	{
 		if (frogs[currentFrog]->GetRect().CollidesWith(&cars[i]->GetRect()))
 		{
-			std::cout << "fuck you!" << std::endl;
+			std::cout << "Your frog Died" << std::endl;
 			frogs[currentFrog]->SetVisible(false);
 			frogs[currentFrog]->SetActive(false);
 
@@ -108,7 +108,7 @@ void Game::Update()
 		if (speed == 0.f)
 		{
 			// Die
-			std::cout << "Die" << std::endl;
+			std::cout << "Your frog Died" << std::endl;
 
 			frogs[currentFrog]->SetVisible(false);
 			frogs[currentFrog]->SetActive(false);
@@ -133,16 +133,18 @@ void Game::Update()
 	}
 
 	// VictoryConditions
-	if (frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 10 && frogs[currentFrog]->GetX() < 45)
-		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 112 && frogs[currentFrog]->GetX() < 148)
-		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 210 && frogs[currentFrog]->GetX() < 245)
-		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 308 && frogs[currentFrog]->GetX() < 343)
-		|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 405 && frogs[currentFrog]->GetX() < 440))
+	//if (frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 10 && frogs[currentFrog]->GetX() < 45)
+	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 112 && frogs[currentFrog]->GetX() < 148)
+	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 210 && frogs[currentFrog]->GetX() < 245)
+	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 308 && frogs[currentFrog]->GetX() < 343)
+	//	|| frogs[currentFrog]->GetY() < 40 && (frogs[currentFrog]->GetX() > 405 && frogs[currentFrog]->GetX() < 440))
+
+	if (frogs[currentFrog]->GetY() < 40)
 	{
 		frogs[currentFrog]->SetVisible(false);
 		frogs[currentFrog]->SetActive(false);
 		frogs[currentFrog]->SetMatchingSpeed(0.f);
-		
+
 		if (currentFrog < nbFrogs)
 		{
 			currentFrog++;
@@ -152,16 +154,16 @@ void Game::Update()
 		}
 		for (int i = 0; i < victoryFrogs.size(); i++)
 		{
+			std::cout << victoryFrogs[i] << std::endl;
+
 			if (frogs[currentFrog]->GetRect().CollidesWith(&victoryFrogs[i]->GetRect()))
 			{
+				
+				std::cout << "collide with fucking victoire" << std::endl;
 				victoryFrogs[i]->SetVisible(true);
 			}
 		}
 	}
-
-	
-
-	
 }
 
 bool Game::OnWater()

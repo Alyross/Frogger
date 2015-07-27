@@ -36,6 +36,7 @@ private:
 	int currentFrog;
 	int frogsCreated;
 	int nbFrogs;
+	int currentVictoryFrog;
 
 	Sprite* startScreen;
 	Sprite* blackScreen;
